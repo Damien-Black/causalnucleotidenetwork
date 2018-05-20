@@ -27,6 +27,9 @@ class PatientCluster(list):
             if self.cluster_scores[k] > threshold_score and k not in skip_properties)
         return props_sorted[:3]
 
+    def load_patients(patients):
+        pass
+
     def _compute_descriptors(self):
         """Assumes properties on objects have compareto implementation"""
         for i, curr_p in enumerate(self):
