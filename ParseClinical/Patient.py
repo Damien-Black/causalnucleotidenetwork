@@ -18,9 +18,11 @@ class Patient(OrderedDict):
         self._age = None
         self._censored = None
         self._clinical_stage = None
+        self._histological_type = None
         self._gender = None
         self._pathologic_stage = None
         self._survival_time = None
+        self._tumor_tissue_site = None
 
     @property
     def age(self):
@@ -43,6 +45,13 @@ class Patient(OrderedDict):
             self._clinical_stage = utils.get_or_default(
                 self['shared_stage:stage_event']['shared_stage:clinical_stage'], '#text')
         return self._clinical_stage
+
+    @property
+    def histological_type(self):
+        if self._histological_type is None:
+            self._histological_type = utils.get_or_default(
+                self['shared:histological_type'], '#text')
+        return self._histological_type
 
     @property
     def gender(self):
@@ -75,3 +84,10 @@ class Patient(OrderedDict):
                 self._censored = False
 
         return self._survival_time
+
+    @property
+    def tumor_tissue_site(self):
+        if self._tumor_tissue_site is None:
+            self._tumor_tissue_site = utils.get_or_default(
+                self['clin_shared:tumor_tissue_site'], '#text')
+        return self._tumor_tissue_site
