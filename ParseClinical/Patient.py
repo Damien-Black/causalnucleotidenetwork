@@ -13,14 +13,16 @@ class Patient(OrderedDict):
         - Use utils.get_or_default in place of try.. except KeyError logic
     """
     def __init__(self, clinical_obj):
-        self.patient_uuid = clinical_obj['kirp:patient']['shared:bcr_patient_uuid']['#text']
+        self._patient_uuid = clinical_obj['kirp:patient']['shared:bcr_patient_uuid']['#text']
         super(Patient, self).__init__(clinical_obj['kirp:patient'])
         self._age = None
         self._censored = None
         self._clinical_stage = None
+        self._histological_type = None
         self._gender = None
         self._pathologic_stage = None
         self._survival_time = None
+        self._tumor_tissue_site = None
 
     @property
     def age(self):
@@ -43,6 +45,13 @@ class Patient(OrderedDict):
             self._clinical_stage = utils.get_or_default(
                 self['shared_stage:stage_event']['shared_stage:clinical_stage'], '#text')
         return self._clinical_stage
+
+    @property
+    def histological_type(self):
+        if self._histological_type is None:
+            self._histological_type = utils.get_or_default(
+                self['shared:histological_type'], '#text')
+        return self._histological_type
 
     @property
     def gender(self):
@@ -75,3 +84,14 @@ class Patient(OrderedDict):
                 self._censored = False
 
         return self._survival_time
+
+    @property
+    def tumor_tissue_site(self):
+        if self._tumor_tissue_site is None:
+            self._tumor_tissue_site = utils.get_or_default(
+                self['clin_shared:tumor_tissue_site'], '#text')
+        return self._tumor_tissue_site
+
+    @property
+    def unique_ID(self):
+        return self._patient_uuid
