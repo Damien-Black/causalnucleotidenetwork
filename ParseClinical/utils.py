@@ -3,9 +3,6 @@ from collections import deque
 import glob
 import os
 
-Stage_Mapping = {
-    # STAGE I -> 0
-}
 
 def find_all_matches(target_dir, filename, glob_pattern=False, abs_path=False, exclude_dirs=[]):
     """
@@ -72,6 +69,15 @@ def get_property_names(obj):
             props.add(attr)
 
     return props
+
+
+class make_comparable(object):
+    """Specifies comparison methd"""
+    def __init__(self, eq_func=lambda x, y: x == y):
+        self._compar_eq_func = eq_func
+
+    def __call__(self, func):
+        func.__eq__ = self._compar_eq_func
 
 
 def search_for_key(target_key, mapping, contains=True):
