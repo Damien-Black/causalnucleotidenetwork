@@ -3,6 +3,9 @@ from collections import deque
 import glob
 import os
 
+Stage_Mapping = {
+    # STAGE I -> 0
+}
 
 def find_all_matches(target_dir, filename, glob_pattern=False, abs_path=False, exclude_dirs=[]):
     """
@@ -42,6 +45,18 @@ def find_all_matches(target_dir, filename, glob_pattern=False, abs_path=False, e
             if dir_ex in dirs:
                 dirs.remove(dir_ex)
     return matches
+
+
+def get_or_default(mapping, key, default_func=lambda: 'UNK'):
+    """Get a key or call a func if not found in dict
+
+    Notes:
+        - UNK = unknown
+    """
+    try:
+        return mapping[key]
+    except KeyError:
+        return default_func
 
 
 def search_for_key(target_key, mapping, contains=True):
