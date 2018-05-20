@@ -13,7 +13,7 @@ class Patient(OrderedDict):
         - Use utils.get_or_default in place of try.. except KeyError logic
     """
     def __init__(self, clinical_obj):
-        self.patient_uuid = clinical_obj['kirp:patient']['shared:bcr_patient_uuid']['#text']
+        self._patient_uuid = clinical_obj['kirp:patient']['shared:bcr_patient_uuid']['#text']
         super(Patient, self).__init__(clinical_obj['kirp:patient'])
         self._age = None
         self._censored = None
@@ -91,3 +91,7 @@ class Patient(OrderedDict):
             self._tumor_tissue_site = utils.get_or_default(
                 self['clin_shared:tumor_tissue_site'], '#text')
         return self._tumor_tissue_site
+
+    @property
+    def unique_ID(self):
+        return self._patient_uuid

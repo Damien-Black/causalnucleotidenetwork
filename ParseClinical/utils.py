@@ -56,7 +56,7 @@ def get_or_default(mapping, key, default_func=lambda: 'UNK'):
     try:
         return mapping[key]
     except KeyError:
-        return default_func
+        return default_func()
 
 
 def get_property_names(obj):
@@ -64,7 +64,7 @@ def get_property_names(obj):
 
     Inspiration: https://stackoverflow.com/questions/17735520/determine-if-given-class-attribute-is-a-property-or-not-python-object
     """
-    props = set
+    props = set()
     obj_type = type(obj)
 
     for attr in dir(obj):
