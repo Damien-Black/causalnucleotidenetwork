@@ -2,7 +2,7 @@
 - Consuming a cluster
 - Have a cluster tell you about itself
 """
-from Patient import Patient
+from Patient import Patient  # Add func to take id and populate
 from collections import defaultdict
 import utils
 
